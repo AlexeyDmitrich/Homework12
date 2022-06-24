@@ -2,6 +2,6 @@ public class MyThread2 implements Runnable{
 
     @Override
     public void run() {
-        CalcIt.calc(Array.arrayHalf2);
+        Array.arrayHalf2 = CalcIt.calc(Array.arrayHalf2);
     }
 }

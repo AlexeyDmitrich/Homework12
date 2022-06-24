@@ -12,23 +12,26 @@ public class Array {
         for (int i = 0; i < array.length; i++) {
             array[i]=1;
         }
+        System.out.println("массив готов");
+        System.out.println(array[9999999]);
         long a = System.currentTimeMillis();
         System.out.println("Начало вычислений прямым брутфорсом");
         array = CalcIt.calc(array);
         System.currentTimeMillis();
-        System.out.println("Метод брутфорс отработал за" + (System.currentTimeMillis()-a));
+        System.out.println("Метод брутфорс отработал за " + (System.currentTimeMillis()-a) + " мс");
 
         Thread thread1 = new Thread(new MyThread1());
         //new Thread(thread1, "Первый поток");
         Thread thread2 = new Thread(new MyThread2());
         //new Thread(thread2, "Второй поток");
 
+        System.out.println();
         System.out.println("начало работы многопоточного метода");
         long b = System.currentTimeMillis();
-        arrayHalf1 = new float[HALF];
+        arrayHalf1 = new float[HALF+1];
         System.arraycopy(array, 0, arrayHalf1, 0, HALF);
-        arrayHalf2 = new float[HALF];
-        System.arraycopy(array, HALF, arrayHalf2, HALF, array.length);
+        arrayHalf2 = new float[HALF+1];
+        System.arraycopy(array, HALF, arrayHalf2, 0, HALF);
 
 
         thread1.start();
@@ -39,7 +42,12 @@ public class Array {
         } catch (InterruptedException e){
             e.getStackTrace();
         }
-        array =
+
+        System.arraycopy(arrayHalf1, 0, array, 0, arrayHalf1.length-1);
+        System.arraycopy(arrayHalf2, 0, array, HALF, arrayHalf2.length-1);
+
+        System.currentTimeMillis();
+        System.out.println("многопоточный метод отработал за " + (System.currentTimeMillis()-b) + " мс");
     }
 
 }
